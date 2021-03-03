@@ -31,7 +31,7 @@ export const postText = (text) => (dispatch) => {
         .then(text => dispatch(addText(text)))
         .catch(error => {
             console.log('Post URL ', error.message)
-            alert("Your url couldnt be scraped: " + error.message)
+            alert("Your url couldnt be scraped: " + error.message + "\nor URL is not supported")
         })
 }
 
