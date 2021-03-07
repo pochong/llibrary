@@ -1,5 +1,4 @@
 import '../App.css';
-import Speech from 'react-speech'
 import { postText } from '../redux/ActionCreators'
 import React from 'react';
 import { connect } from 'react-redux'
