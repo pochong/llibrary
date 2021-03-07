@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Label, Button, Row, Col } from 'reactstrap'
 import { Control, LocalForm } from 'react-redux-form'
+import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 
 const mapStateToProps = state => {
     return {
@@ -115,11 +116,7 @@ function Main(props) {
 
     const handleSubmit = (text) => {
         props.postText(text.url)
-        //console.log(text.url)
-        //event.preventDefault();
     }
-
-    //console.log(typeof props.text)
 
     return (
         <div className="App">
@@ -141,16 +138,8 @@ function Main(props) {
                             </Col>
                         </Row>
                     </LocalForm>
-                    <p></p>
                     <div>
-                        <Speech
-                            styles={style}
-                            text={props.text}
-                            //textAsButton={true}
-                            //displayText={"Press play"}
-                            pause={true}
-                            resume={true}
-                            stop={true} />
+                        <TextToSpeech text={props.text} />
                     </div>
                     <div>
                         <RenderText text={props.text} />

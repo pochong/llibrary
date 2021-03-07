@@ -60,3 +60,25 @@
     transform: rotate(360deg);
   }
 }
+
+.play, .pause, .stop, .btnn  {
+  margin-top: 50px;
+  margin-left: 10px;
+  height: 60px;
+  width: 76px;
+  border-radius: 25px;
+  color: lightgrey;
+  background-color:#282c34;
+  outline-style: none;
+  border-style: none;
+}
+
+.play:hover, .pause:hover, .stop:hover {
+  background-color: whitesmoke;
+  color: black;
+}
+
+.play:active, .pause:active, .stop:active {
+  background-color: rgb(105, 227, 252);
+}
+
