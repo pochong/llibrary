@@ -8,7 +8,8 @@ import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 
 const mapStateToProps = state => {
     return {
-        text: state.text
+        text: state.text,
+        printText: state.printText
     }
 };
 
@@ -16,78 +17,78 @@ const mapDispatchToProps = (dispatch) => ({
     postText: (text) => { dispatch(postText(text)) }
 });
 
-const style = {
-    play: {
-        hover: {
-            backgroundColor: 'GhostWhite',
-            color: 'white'
-        },
-        button: {
-            width: '50px',
-            height: '50px',
-            cursor: 'pointer',
-            pointerEvents: 'none',
-            fontFamily: 'Helvetica',
-            fontSize: '1.0em',
-            outline: 'none',
-            backgroundColor: 'gray',
-            border: 'solid 1px rgba(255,255,255,1)',
-            borderRadius: 6
-        },
-    },
-    pause: {
-        hover: {
-            backgroundColor: 'GhostWhite',
-        },
-        button: {
-            width: '50px',
-            height: '50px',
-            cursor: 'pointer',
-            pointerEvents: 'none',
-            fontFamily: 'Helvetica',
-            fontSize: '1.0em',
-            outline: 'none',
-            backgroundColor: 'gray',
-            border: 'solid 1px rgba(255,255,255,1)',
-            borderRadius: 6,
-            title: "pause"
-        },
-    },
-    stop: {
-        hover: {
-            backgroundColor: 'GhostWhite',
-        },
-        button: {
-            width: '50px',
-            height: '50px',
-            cursor: 'pointer',
-            pointerEvents: 'none',
-            fontFamily: 'Helvetica',
-            fontSize: '1.0em',
-            outline: 'none',
-            backgroundColor: 'gray',
-            border: 'solid 1px rgba(255,255,255,1)',
-            borderRadius: 6
-        },
-    },
-    resume: {
-        hover: {
-            backgroundColor: 'GhostWhite',
-        },
-        button: {
-            width: '50px',
-            height: '50px',
-            cursor: 'pointer',
-            pointerEvents: 'none',
-            fontFamily: 'Helvetica',
-            fontSize: '1.0em',
-            outline: 'none',
-            backgroundColor: 'gray',
-            border: 'solid 1px rgba(255,255,255,1)',
-            borderRadius: 6
-        },
-    },
-};
+// const style = {
+//     play: {
+//         hover: {
+//             backgroundColor: 'GhostWhite',
+//             color: 'white'
+//         },
+//         button: {
+//             width: '50px',
+//             height: '50px',
+//             cursor: 'pointer',
+//             pointerEvents: 'none',
+//             fontFamily: 'Helvetica',
+//             fontSize: '1.0em',
+//             outline: 'none',
+//             backgroundColor: 'gray',
+//             border: 'solid 1px rgba(255,255,255,1)',
+//             borderRadius: 6
+//         },
+//     },
+//     pause: {
+//         hover: {
+//             backgroundColor: 'GhostWhite',
+//         },
+//         button: {
+//             width: '50px',
+//             height: '50px',
+//             cursor: 'pointer',
+//             pointerEvents: 'none',
+//             fontFamily: 'Helvetica',
+//             fontSize: '1.0em',
+//             outline: 'none',
+//             backgroundColor: 'gray',
+//             border: 'solid 1px rgba(255,255,255,1)',
+//             borderRadius: 6,
+//             title: "pause"
+//         },
+//     },
+//     stop: {
+//         hover: {
+//             backgroundColor: 'GhostWhite',
+//         },
+//         button: {
+//             width: '50px',
+//             height: '50px',
+//             cursor: 'pointer',
+//             pointerEvents: 'none',
+//             fontFamily: 'Helvetica',
+//             fontSize: '1.0em',
+//             outline: 'none',
+//             backgroundColor: 'gray',
+//             border: 'solid 1px rgba(255,255,255,1)',
+//             borderRadius: 6
+//         },
+//     },
+//     resume: {
+//         hover: {
+//             backgroundColor: 'GhostWhite',
+//         },
+//         button: {
+//             width: '50px',
+//             height: '50px',
+//             cursor: 'pointer',
+//             pointerEvents: 'none',
+//             fontFamily: 'Helvetica',
+//             fontSize: '1.0em',
+//             outline: 'none',
+//             backgroundColor: 'gray',
+//             border: 'solid 1px rgba(255,255,255,1)',
+//             borderRadius: 6
+//         },
+//     },
+// };
 
 // RenderText receives a text props for use in rendering the
 // text of the novel in a nice format, seperating each section 
@@ -101,9 +102,7 @@ function RenderText(text) {
         <ul className="list-unstyled">
             {sentence.map((sen) => {
                 return (
-                    <div key={sen.uniqueId}>
-                        <p>{sen}</p>
-                    </div>
+                    <p key={sen.uniqueId}>{sen}</p>
                 )
             })}
         </ul>
