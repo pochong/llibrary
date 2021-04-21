@@ -117,7 +117,7 @@ class TextToSpeech extends Component {
 
     render() {
         return (
-            <div className="row" onunload={this.stop}>
+            <div className="row">
                 <Button id="play" className="play" onClick={this.play}>
                     <span className="fa fa-play fa-2x"></span>
                 </Button>

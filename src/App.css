@@ -39,6 +39,14 @@
   align-items: center;
 }
 
+.Text_font_text {
+  color: white
+}
+
+.Text_font_text:hover {
+  background-color: aquamarine;
+}
+
 .form-control {
   width: 50vh;
 }

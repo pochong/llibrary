@@ -1,7 +1,7 @@
 import '../App.css';
-import { postText } from '../redux/ActionCreators'
+import { postText, textFailed } from '../redux/ActionCreators'
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect, ReactReduxContext } from 'react-redux'
 import { Label, Button, Row, Col } from 'reactstrap'
 import { Control, LocalForm } from 'react-redux-form'
 import TextToSpeech from '../Text_To_Speech/TextToSpeech'
@@ -9,7 +9,6 @@ import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 const mapStateToProps = state => {
     return {
         text: state.text,
-        printText: state.printText
     }
 };
 
@@ -94,19 +93,27 @@ const mapDispatchToProps = (dispatch) => ({
 // text of the novel in a nice format, seperating each section 
 // with new line
 function RenderText(text) {
+    //console.log(text)
 
+    //var text_string = Object.values(text)
+    //console.log(text_string)
+
+    //console.log(Object.values(text))
     //var text_string = String(text.text);
-    var sentence = text.text.split("\n");
+    //var sentence = text.text.split("\n");
+    //var sentence = text_string.toString().split("\n");
+    //console.log(sentence)
 
     return (
         <ul className="list-unstyled">
-            {sentence.map((sen) => {
+            {text.text.map((sen, index) => {
                 return (
-                    <p key={sen.uniqueId}>{sen}</p>
+                    <p className = 'Text_font_text' key={index}>{sen}</p>
                 )
             })}
         </ul>
     )
+
 };
 
 function Main(props) {
@@ -115,7 +122,9 @@ function Main(props) {
     const handleSubmit = (text) => {
         props.postText(text.url)
     }
+    var text_split = props.text.split('\n')
 
+    console.log(text_split)
     return (
         <div className="App">
             <header className="App-header">
@@ -140,7 +149,7 @@ function Main(props) {
                         <TextToSpeech text={props.text} />
                     </div>
                     <div>
-                        <RenderText text={props.text} />
+                        <RenderText text={text_split} />
                     </div>
                 </div>
             </div>

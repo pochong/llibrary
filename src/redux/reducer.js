@@ -3,7 +3,7 @@ import * as ActionTypes from './ActionTypes'
 export const Reducer = (state = {
     isLoading: true,
     errMess: null,
-    text: "there is nothing to say",
+    text: "there is nothing to speak",
 }, action) => {
 
     switch (action.type) {
