@@ -1,3 +1,33 @@
+# LLibrary
+
+This project is a website created for text to speech on light novel websites
+
+## Getting Started
+
+Open two command prompt
+
+One of them:
+### `cd` to the llibrary directory
+
+The other one:
+### `cd ../llibrary/llibraryServer` to the the llibrary server directory
+
+To run the server and website
+### `yarn start`
+
+## Supported website For the moment
+
+https://www.asianhobbyist.com
+https://lmsnovel.wordpress.com
+https://novelonomicon.com
+
+## Sample working URLS
+
+The urls will need to include the chapter of the novel you would want to scrape.
+
+https://novelonomicon.com/novels/isekai-yururi-kikou/chapter-285/
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
