@@ -17,13 +17,13 @@ To run the server and website
 
 ## Supported website For the moment
 
-https://www.asianhobbyist.com
-https://lmsnovel.wordpress.com
+https://www.asianhobbyist.com \
+https://lmsnovel.wordpress.com \
 https://novelonomicon.com
 
 ## Sample working URLS
 
-The urls will need to include the chapter of the novel you would want to scrape.
+The urls will need to include the chapter of the novel you would want to scrape. \
 
 https://novelonomicon.com/novels/isekai-yururi-kikou/chapter-285/
 
