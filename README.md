@@ -23,7 +23,7 @@ https://novelonomicon.com
 
 ## Sample working URLS
 
-The urls will need to include the chapter of the novel you would want to scrape. \
+The urls will need to include the chapter of the novel you would want to scrape. 
 
 https://novelonomicon.com/novels/isekai-yururi-kikou/chapter-285/
 
