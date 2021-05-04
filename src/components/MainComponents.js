@@ -108,7 +108,7 @@ function RenderText(text) {
         <ul className="list-unstyled">
             {text.text.map((sen, index) => {
                 return (
-                    <p className = 'Text_font_text' key={index}>{sen}</p>
+                    <p className='Text_font_text' key={index}>{sen}</p>
                 )
             })}
         </ul>
@@ -146,7 +146,7 @@ function Main(props) {
                         </Row>
                     </LocalForm>
                     <div>
-                        <TextToSpeech text={props.text} />
+                        <TextToSpeech split={text_split} />
                     </div>
                     <div>
                         <RenderText text={text_split} />

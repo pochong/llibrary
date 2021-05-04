@@ -1,3 +1,7 @@
+/*
+    This file is taken from the src folder of the react-speech component and modified to fit this project
+*/
+
 import React, { Component } from "react";
 import SpeechSynthesis from "./SpeechSynthesis"
 import { Button } from 'reactstrap'
@@ -9,7 +13,8 @@ class TextToSpeech extends Component {
         this.state = {
             SPEAKING: false,
             PAUSED: false,
-            STOPPED: false
+            STOPPED: false,
+            index: 0
         };
         this.play = this.play.bind(this);
         this.pause = this.pause.bind(this);
@@ -71,9 +76,13 @@ class TextToSpeech extends Component {
     //  function for setting up the speech sysnthesis utterance
     //  for text-to-speech
     setSpeechSynthesis() {
-        this.speechSynthesis = new SpeechSynthesis(this.props);
+        var text = this.props.split[this.state.index].replace(/\n/g, '')
+        console.log(text)
+        console.log(text.replace(/\n/g, ''))
+        this.speechSynthesis = new SpeechSynthesis(this.props, text)
         this.speechSynthesis.onend(this.onend);
         this.speechSynthesis.onerror(this.onerror);
+        //console.log(this.props.split)
     }
 
     //  function for playing the text-to-speech
@@ -106,7 +115,16 @@ class TextToSpeech extends Component {
 
     //  function for what happens when the speech finishes
     onend() {
-        this.stop();
+        if (this.state.index < this.props.split.length - 1) {
+            this.stop();
+            var index_temp = this.state.index + 1;
+            this.setState({ index: index_temp });
+            console.log(this.state.index)
+            this.play();
+        } else {
+            this.setState({ index: 0 });
+            this.stop();
+        }
     }
 
     //  function for what happens when there are errors
