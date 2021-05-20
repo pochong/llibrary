@@ -13,7 +13,8 @@ The other one:
 ### `cd ../llibrary/llibraryServer` to the the llibrary server directory
 
 To run the server and website
-### `yarn start`
+### `yarn start` the server first
+### `yarn start` the llibrary directory and press yes when prompted
 
 ## Supported website For the moment
 
@@ -26,6 +27,12 @@ https://novelonomicon.com
 The urls will need to include the chapter of the novel you would want to scrape. 
 
 https://novelonomicon.com/novels/isekai-yururi-kikou/chapter-285/
+
+## How the website Works
+
+You can click on the text to decide where to start speaking. \
+Text in blue color will mean that it will start at that line when you press play. \
+It also determines which line is being spoken at the moment if it is already playing.
 
 
 # Getting Started with Create React App
