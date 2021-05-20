@@ -1,14 +1,14 @@
 import '../App.css';
-import { postText, textFailed } from '../redux/ActionCreators'
-import React from 'react';
-import { connect, ReactReduxContext } from 'react-redux'
+import { postText } from '../redux/ActionCreators'
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { Label, Button, Row, Col } from 'reactstrap'
 import { Control, LocalForm } from 'react-redux-form'
 import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 
 const mapStateToProps = state => {
     return {
-        text: state.text,
+        text: state.text
     }
 };
 
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch) => ({
 // RenderText receives a text props for use in rendering the
 // text of the novel in a nice format, seperating each section 
 // with new line
-function RenderText(text) {
+function RenderText(props) {
     //console.log(text)
 
     //var text_string = Object.values(text)
@@ -102,59 +102,119 @@ function RenderText(text) {
     //var text_string = String(text.text);
     //var sentence = text.text.split("\n");
     //var sentence = text_string.toString().split("\n");
-    //console.log(sentence)
+    //console.log(typeof props.handleIndex)
+
+    function handleClick(index) {
+        props.handleIndex(index);
+        //setconsole("this is working  " + index)
+        //setconsole("this is stateIndex: " + props.stateIndex)
+        // document.getElementById(index).style.color = "blue"
+        //changeColor(index, props.stateIndex)
+    }
 
     return (
         <ul className="list-unstyled">
-            {text.text.map((sen, index) => {
-                return (
-                    <p className='Text_font_text' key={index}>{sen}</p>
-                )
+            {props.text.map((sen, index) => {
+                if (index === 0) {
+                    return (
+                        <p id={index} className='Text_font_text' key={index} onClick={() => handleClick(index)} style={{ color: 'blue' }} >{sen}</p>
+                    )
+                } else {
+                    return (
+                        <p id={index} className='Text_font_text' key={index} onClick={() => handleClick(index)} >{sen}</p>
+                    )
+                }
             })}
         </ul>
     )
 
 };
 
-function Main(props) {
+// function handleIndex(state, index) {
+//     state.setState({ index: index });
+//     setconsole("this is working fine")
+// }
+
+//function Main(props) {
+class Main extends Component {
     //useEffect(() => { props.fetchText(); }, []);
 
-    const handleSubmit = (text) => {
-        props.postText(text.url)
+    constructor(props) {
+        super(props);
+        this.state = {
+            index: 0
+        }
+        this.handleIndex = this.handleIndex.bind(this);
+        this.changeColor = this.changeColor.bind(this)
     }
-    var text_split = props.text.split('\n')
 
-    console.log(text_split)
-    return (
-        <div className="App">
-            <header className="App-header">
-                <h1>LLibrary</h1>
-            </header>
-            <div className="container-fluid">
-                <div className="col-12 col-md-9 Text_font">
-                    <LocalForm onSubmit={(text) => handleSubmit(text)}>
-                        <Row className="form-group">
-                            <Label htmlFor="text" className="column"> Url </Label>
-                            <Col>
-                                <Control.text model=".url" id="url" name="url" placeholder="Enter Text" className="form-control" />
-                            </Col>
-                        </Row>
-                        <Row className="form-group button">
-                            <Col>
-                                <Button type="submit" color="primary"> Submit</Button>
-                            </Col>
-                        </Row>
-                    </LocalForm>
-                    <div>
-                        <TextToSpeech split={text_split} />
-                    </div>
-                    <div>
-                        <RenderText text={text_split} />
+    handleIndex(index) {
+        this.setState({ index: index });
+        //setconsole("this is working fine, index: " + this.state.index);
+        this.changeColor(index, this.state.index)
+    }
+
+    changeColor(index, stateIndex) {
+        //console.log("switching colors")
+        var list = document.getElementsByClassName('Text_font_text');
+        if (index === stateIndex && index > 0) {
+            list.namedItem(index.toString()).style.color = 'blue'
+            if (list.namedItem((index - 1).toString()).style.color === 'blue') {
+                list.namedItem((index - 1).toString()).style.color = 'white'
+            }
+        } else if (index === 0 && index === stateIndex) {
+            list.namedItem(index.toString()).style.color = 'blue'
+        } else {
+            list.namedItem(index.toString()).style.color = 'blue'
+            list.namedItem(stateIndex.toString()).style.color = 'white'
+        }
+    }
+
+    render() {
+
+        const handleSubmit = (text) => {
+            this.props.postText(text.url)
+        }
+
+        // const handleIndex = (index) => {
+        //     this.setState({ index: index });
+        //     setconsole("this is working fine");
+        // }
+
+        var text_split = this.props.text.split('\n')
+        //console.log(text_split)
+
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <h1>LLibrary</h1>
+                </header>
+                <div className="container-fluid">
+                    <div className="col-12 col-md-9 Text_font">
+                        <LocalForm onSubmit={(text) => handleSubmit(text)}>
+                            <Row className="form-group">
+                                <Label htmlFor="text" className="column"> Url </Label>
+                                <Col>
+                                    <Control.text model=".url" id="url" name="url" placeholder="Enter Text" className="form-control" />
+                                </Col>
+                            </Row>
+                            <Row className="form-group button">
+                                <Col>
+                                    <Button type="submit" color="primary"> Submit</Button>
+                                </Col>
+                            </Row>
+                        </LocalForm>
+                        <div>
+                            <TextToSpeech split={text_split} index={this.state.index} handleIndex={this.handleIndex} changeColor={this.changeColor} />
+                        </div>
+                        <div>
+                            <RenderText text={text_split} handleIndex={this.handleIndex} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

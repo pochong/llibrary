@@ -14,7 +14,7 @@ class TextToSpeech extends Component {
             SPEAKING: false,
             PAUSED: false,
             STOPPED: false,
-            index: 0
+            REAL_STOP: false
         };
         this.play = this.play.bind(this);
         this.pause = this.pause.bind(this);
@@ -76,9 +76,9 @@ class TextToSpeech extends Component {
     //  function for setting up the speech sysnthesis utterance
     //  for text-to-speech
     setSpeechSynthesis() {
-        var text = this.props.split[this.state.index].replace(/\n/g, '')
-        console.log(text)
-        console.log(text.replace(/\n/g, ''))
+        var text = this.props.split[this.props.index].replace(/\n/g, '')
+        //console.log(text)
+        //console.log(text.replace(/\n/g, ''))
         this.speechSynthesis = new SpeechSynthesis(this.props, text)
         this.speechSynthesis.onend(this.onend);
         this.speechSynthesis.onerror(this.onerror);
@@ -92,37 +92,38 @@ class TextToSpeech extends Component {
         if (this.state.SPEAKING === false && this.state.PAUSED === false) {
             this.setSpeechSynthesis();
             this.speechSynthesis.speak();
-            this.setState({ SPEAKING: true, PAUSED: false, STOPPED: false });
+            this.setState({ SPEAKING: true, PAUSED: false, STOPPED: false, REAL_STOP: false });
         } else if (this.state.PAUSED === true && this.state.SPEAKING === false) {
             this.speechSynthesis.resume();
-            this.setState({ SPEAKING: true, PAUSED: false, STOPPED: false });
+            this.setState({ SPEAKING: true, PAUSED: false, STOPPED: false, REAL_STOP: false });
         } else {
-            this.setState({ SPEAKING: false, PAUSED: false, STOPPED: false });
+            this.setState({ SPEAKING: false, PAUSED: false, STOPPED: false, REAL_STOP: false });
         }
     }
 
     //  function for pausing the speech
     pause() {
         this.speechSynthesis.pause();
-        this.setState({ PAUSED: true, SPEAKING: false, STOPPED: false });
+        this.setState({ PAUSED: true, SPEAKING: false, STOPPED: false, REAL_STOP: false });
     }
 
     //  function for stopping the speech
     stop() {
         this.speechSynthesis.cancel();
-        this.setState({ SPEAKING: false, PAUSED: false, STOPPED: true });
+        this.setState({ SPEAKING: false, PAUSED: false, STOPPED: true, REAL_STOP: true });
     }
 
     //  function for what happens when the speech finishes
     onend() {
-        if (this.state.index < this.props.split.length - 1) {
+        if (this.props.index < this.props.split.length - 1 && this.state.REAL_STOP === false) {
             this.stop();
-            var index_temp = this.state.index + 1;
-            this.setState({ index: index_temp });
-            console.log(this.state.index)
+            this.props.handleIndex(this.props.index + 1);
+            //this.setState({ index: index_temp });
+            //console.log(this.props.index)
             this.play();
         } else {
-            this.setState({ index: 0 });
+            this.props.changeColor(0, this.props.index)
+            this.props.handleIndex(0);
             this.stop();
         }
     }
@@ -150,4 +151,10 @@ class TextToSpeech extends Component {
     }
 }
 
+// function setconsole(text) {
+//     console.log(text)
+// }
+
+
 export default TextToSpeech;
+//export { setconsole };

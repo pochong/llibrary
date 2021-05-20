@@ -32,7 +32,7 @@ export default class SpeechSynthesis {
   }
 
   speak() {
-    console.log(this.utterance.text)
+    //console.log(this.utterance.text)
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(this.utterance);
   }
