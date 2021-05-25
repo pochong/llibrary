@@ -6,7 +6,7 @@ export const postText = (text) => (dispatch) => {
     // setTimeout(() => {
     //     dispatch(addText("this is working"));
     // }, 2000)
-    return fetch("http://localhost:3000/", {
+    return fetch("https://llibrary-server.herokuapp.com/", {
         method: 'POST',
         body: text,
         headers: {
