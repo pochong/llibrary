@@ -6,7 +6,7 @@ export const postText = (text) => (dispatch) => {
     // setTimeout(() => {
     //     dispatch(addText("this is working"));
     // }, 2000)
-    return fetch("https://llibrary-server.herokuapp.com/", {
+    return fetch("https://llibrary-server.herokuapp.com/users", {
         method: 'POST',
         body: text,
         headers: {
@@ -32,7 +32,7 @@ export const postText = (text) => (dispatch) => {
         .catch(error => {
             console.log('Post URL ', error.message)
             alert("Your url couldnt be scraped: " + error.message + "\nor URL is not supported")
-            dispatch(textFailed(error.message))
+            //dispatch(textFailed(error.message))
         })
 }
 
