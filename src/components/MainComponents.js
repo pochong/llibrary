@@ -117,7 +117,7 @@ function RenderText(props) {
             {props.text.map((sen, index) => {
                 if (index === 0) {
                     return (
-                        <p id={index} className='Text_font_text' key={index} onClick={() => handleClick(index)} style={{ color: 'blue' }} >{sen}</p>
+                        <p id={index} className='Text_font_text' key={index} onClick={() => handleClick(index)} style={{ color: 'goldenrod' }} >{sen}</p>
                     )
                 } else {
                     return (
@@ -158,14 +158,15 @@ class Main extends Component {
         //console.log("switching colors")
         var list = document.getElementsByClassName('Text_font_text');
         if (index === stateIndex && index > 0) {
-            list.namedItem(index.toString()).style.color = 'blue'
-            if (list.namedItem((index - 1).toString()).style.color === 'blue') {
+            list.namedItem(index.toString()).style.color = 'goldenrod'
+            console.log(list.namedItem((index - 1).toString()).style.color)
+            if (list.namedItem((index - 1).toString()).style.color === 'goldenrod') {
                 list.namedItem((index - 1).toString()).style.color = 'white'
             }
         } else if (index === 0 && index === stateIndex) {
-            list.namedItem(index.toString()).style.color = 'blue'
+            list.namedItem(index.toString()).style.color = 'goldenrod'
         } else {
-            list.namedItem(index.toString()).style.color = 'blue'
+            list.namedItem(index.toString()).style.color = 'goldenrod'
             list.namedItem(stateIndex.toString()).style.color = 'white'
         }
     }
