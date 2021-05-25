@@ -14,7 +14,8 @@ class TextToSpeech extends Component {
             SPEAKING: false,
             PAUSED: false,
             STOPPED: false,
-            REAL_STOP: false
+            REAL_STOP: false,
+            index: 0
         };
         this.play = this.play.bind(this);
         this.pause = this.pause.bind(this);
@@ -118,7 +119,9 @@ class TextToSpeech extends Component {
         if (this.props.index < this.props.split.length - 1 && this.state.REAL_STOP === false) {
             this.stop();
             this.props.handleIndex(this.props.index + 1);
-            //this.setState({ index: index_temp });
+            this.setState({ index: this.props.index });
+            console.log(this.state.index);
+            console.log(this.props.index);
             //console.log(this.props.index)
             this.play();
         } else {
