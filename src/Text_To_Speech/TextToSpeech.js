@@ -59,7 +59,11 @@ class TextToSpeech extends Component {
     //  re-render the state of the buttons
     //  when pressed
     componentDidUpdate(prevProps) {
-        if (this.props.index !== prevProps.index && this.state.SPEAKING === true) {
+        if (this.props.index !== prevProps.index && this.state.SPEAKING === true ||
+            this.props.pitch !== prevProps.pitch && this.state.SPEAKING === true ||
+            this.props.volume !== prevProps.volume && this.state.SPEAKING === true ||
+            this.props.rate !== prevProps.rate && this.state.SPEAKING === true ||
+            this.props.voice !== prevProps.voice && this.state.SPEAKING === true) {
             this.stop();
             this.setState({ SPEAKING: true, PAUSED: false, STOPPED: false, REAL_STOP: false, SWITCHING: true });
         }
@@ -85,6 +89,7 @@ class TextToSpeech extends Component {
         //console.log(text)
         //console.log(text.replace(/\n/g, ''))
         this.speechSynthesis = new SpeechSynthesis(this.props, text)
+        //console.log(this.props)
         this.speechSynthesis.onend(this.onend);
         this.speechSynthesis.onerror(this.onerror);
         //console.log(this.props.split)

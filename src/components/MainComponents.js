@@ -1,8 +1,8 @@
 import '../App.css';
 import { postText } from '../redux/ActionCreators'
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux'
-import { Label, Button, Row, Col } from 'reactstrap'
+import { Label, Button, Row, Col, Input, ButtonDropdown, UncontrolledDropdown, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { Control, LocalForm } from 'react-redux-form'
 import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 
@@ -93,23 +93,9 @@ const mapDispatchToProps = (dispatch) => ({
 // text of the novel in a nice format, seperating each section 
 // with new line
 function RenderText(props) {
-    //console.log(text)
-
-    //var text_string = Object.values(text)
-    //console.log(text_string)
-
-    //console.log(Object.values(text))
-    //var text_string = String(text.text);
-    //var sentence = text.text.split("\n");
-    //var sentence = text_string.toString().split("\n");
-    //console.log(typeof props.handleIndex)
 
     function handleClick(index) {
         props.handleIndex(index);
-        //setconsole("this is working  " + index)
-        //setconsole("this is stateIndex: " + props.stateIndex)
-        // document.getElementById(index).style.color = "blue"
-        //changeColor(index, props.stateIndex)
     }
 
     return (
@@ -130,10 +116,39 @@ function RenderText(props) {
 
 };
 
-// function handleIndex(state, index) {
-//     state.setState({ index: index });
-//     setconsole("this is working fine")
-// }
+function RenderVoices(props) {
+
+    function handleClick(voice) {
+        props.handleVoice(voice);
+    }
+
+    //console.log(props.voices)
+    if (props.voices.length != 0) {
+        var voices_arr = []
+        props.voices.forEach(voices => {
+            voices_arr.push(voices.name)
+        });
+
+        return (
+
+            <Input type="select" name="select" id="select" style={{ width: "450px", fontSize: "30px" }} onChange={(e) => handleClick(e.target.value)}>
+                {voices_arr.map((voice, index) => {
+                    return (
+                        <option value={voice}>{voice}</option>
+                    )
+                })}
+            </Input>
+
+        )
+    } else {
+        return (
+            <div style={{ fontSize: "20px" }}>
+                <p>No voices at the moment.</p>
+                <p>Please select an Url for voices to be displayed.</p>
+            </div>
+        )
+    }
+}
 
 //function Main(props) {
 class Main extends Component {
@@ -142,9 +157,17 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            index: 0
+            index: 0,
+            voice_speed: 1,
+            volume: 1,
+            pitch: 1,
+            voice: "",
         }
         this.handleIndex = this.handleIndex.bind(this);
+        this.handleSpeed = this.handleSpeed.bind(this);
+        this.handlePitch = this.handlePitch.bind(this);
+        this.handleVolume = this.handleVolume.bind(this);
+        this.handleVoice = this.handleVoice.bind(this);
         this.changeColor = this.changeColor.bind(this)
     }
 
@@ -154,12 +177,28 @@ class Main extends Component {
         this.changeColor(index, this.state.index)
     }
 
+    handleVoice(voice) {
+        this.setState({ voice: voice });
+    }
+
+    handleSpeed(speed) {
+        this.setState({ voice_speed: speed });
+    }
+
+    handleVolume(volume) {
+        this.setState({ volume: volume });
+    }
+
+    handlePitch(pitch) {
+        this.setState({ pitch: pitch });
+    }
+
     changeColor(index, stateIndex) {
         //console.log("switching colors")
         var list = document.getElementsByClassName('Text_font_text');
         if (index === stateIndex && index > 0) {
             list.namedItem(index.toString()).style.color = 'goldenrod'
-            console.log(list.namedItem((index - 1).toString()).style.color)
+            //console.log(list.namedItem((index - 1).toString()).style.color)
             if (list.namedItem((index - 1).toString()).style.color === 'goldenrod') {
                 list.namedItem((index - 1).toString()).style.color = 'white'
             }
@@ -177,13 +216,11 @@ class Main extends Component {
             this.props.postText(text.url)
         }
 
-        // const handleIndex = (index) => {
-        //     this.setState({ index: index });
-        //     setconsole("this is working fine");
-        // }
-
         var text_split = this.props.text.split('\n')
-        //console.log(text_split)
+
+        var voices = window.speechSynthesis.getVoices()
+
+        console.log(this.state.voice)
 
         return (
             <div className="App">
@@ -205,10 +242,26 @@ class Main extends Component {
                                 </Col>
                             </Row>
                         </LocalForm>
-                        <div>
-                            <TextToSpeech split={text_split} index={this.state.index} handleIndex={this.handleIndex} changeColor={this.changeColor} />
+                        <div className="sidenav">
+                            <div className="slidecontainer">
+                                <p>Voices</p>
+                                <RenderVoices voices={voices} handleVoice={this.handleVoice} />
+
+                                <p>Playback Speed : {this.state.voice_speed}</p>
+                                <input type="range" min="0" max="1" value={this.state.voice_speed} step="0.01" class="slider" id="speed" onChange={(event) => this.handleSpeed(event.target.value)} />
+
+                                <p>Volume : {this.state.volume}</p>
+                                <input type="range" min="0.1" max="9.99" value={this.state.volume} step="0.01" class="slider" id="volume" onChange={(event) => this.handleVolume(event.target.value)} />
+
+                                <p>Pitch : {this.state.pitch}</p>
+                                <input type="range" min="0" max="2" value={this.state.pitch} step="0.01" class="slider" id="pitch" onChange={(event) => this.handlePitch(event.target.value)} />
+                                <p></p>
+                            </div>
                         </div>
                         <div>
+                            <TextToSpeech voice={this.state.voice} rate={this.state.voice_speed} pitch={this.state.pitch} volume={this.state.volume} split={text_split} index={this.state.index} handleIndex={this.handleIndex} changeColor={this.changeColor} />
+                        </div>
+                        <div className="text">
                             <RenderText text={text_split} handleIndex={this.handleIndex} />
                         </div>
                     </div>

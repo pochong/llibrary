@@ -8,9 +8,9 @@ export default class SpeechSynthesis {
     this.utterance.voice = this.selected;
     this.utterance.text = text;//.replace(/\n/g, '')
     this.utterance.lang = props.lang || 'en-GB';
-    this.utterance.pitch = parseFloat(props.pitch, 10) || 1;
-    this.utterance.rate = parseFloat(props.rate, 10) || 1;
-    this.utterance.volume = parseFloat(props.volume, 10) || 1;
+    this.utterance.pitch = parseFloat(props.pitch) || 1;
+    this.utterance.rate = parseFloat(props.rate) || 1;
+    this.utterance.volume = parseFloat(props.volume) || 1;
   }
 
   static supported(selected) {
@@ -32,7 +32,7 @@ export default class SpeechSynthesis {
   }
 
   speak() {
-    //console.log(this.utterance.text)
+    //console.log(this.utterance.pitch)
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(this.utterance);
   }
