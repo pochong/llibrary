@@ -21,7 +21,7 @@
 .Text_font {
   font-size: calc(10px + 2vmin);
   background-color: #282c34;
-  min-height: 90vh;
+  min-height: 100vh;
   color: white;
   display: flex;
   flex-direction: column;
@@ -67,8 +67,8 @@
 }
 
 .sidenav {
-  width: 500px;
-  height: 600px;
+  width: 39vh;
+  height: 50vh;
   position: fixed;
   top: 30vh;
   left: 99%;
@@ -79,11 +79,15 @@
 }
 
 .sidenav:hover {
-  left: 80%;
+  left: 79%;
 }
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
+}
+
+@media  screen and (max-width: 1080px) {
+  .sidenav:hover {left: 13%;}
 }
 
 .text {

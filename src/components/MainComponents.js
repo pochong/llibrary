@@ -1,9 +1,9 @@
 import '../App.css';
 import { postText } from '../redux/ActionCreators'
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Label, Button, Row, Col, Input, ButtonDropdown, UncontrolledDropdown, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
-import { Control, LocalForm } from 'react-redux-form'
+import { Label, Button, Row, Col, Input, Form, FormGroup } from 'reactstrap'
+//import { Control, LocalForm } from 'react-redux-form'
 import TextToSpeech from '../Text_To_Speech/TextToSpeech'
 
 const mapStateToProps = state => {
@@ -15,79 +15,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     postText: (text) => { dispatch(postText(text)) }
 });
-
-// const style = {
-//     play: {
-//         hover: {
-//             backgroundColor: 'GhostWhite',
-//             color: 'white'
-//         },
-//         button: {
-//             width: '50px',
-//             height: '50px',
-//             cursor: 'pointer',
-//             pointerEvents: 'none',
-//             fontFamily: 'Helvetica',
-//             fontSize: '1.0em',
-//             outline: 'none',
-//             backgroundColor: 'gray',
-//             border: 'solid 1px rgba(255,255,255,1)',
-//             borderRadius: 6
-//         },
-//     },
-//     pause: {
-//         hover: {
-//             backgroundColor: 'GhostWhite',
-//         },
-//         button: {
-//             width: '50px',
-//             height: '50px',
-//             cursor: 'pointer',
-//             pointerEvents: 'none',
-//             fontFamily: 'Helvetica',
-//             fontSize: '1.0em',
-//             outline: 'none',
-//             backgroundColor: 'gray',
-//             border: 'solid 1px rgba(255,255,255,1)',
-//             borderRadius: 6,
-//             title: "pause"
-//         },
-//     },
-//     stop: {
-//         hover: {
-//             backgroundColor: 'GhostWhite',
-//         },
-//         button: {
-//             width: '50px',
-//             height: '50px',
-//             cursor: 'pointer',
-//             pointerEvents: 'none',
-//             fontFamily: 'Helvetica',
-//             fontSize: '1.0em',
-//             outline: 'none',
-//             backgroundColor: 'gray',
-//             border: 'solid 1px rgba(255,255,255,1)',
-//             borderRadius: 6
-//         },
-//     },
-//     resume: {
-//         hover: {
-//             backgroundColor: 'GhostWhite',
-//         },
-//         button: {
-//             width: '50px',
-//             height: '50px',
-//             cursor: 'pointer',
-//             pointerEvents: 'none',
-//             fontFamily: 'Helvetica',
-//             fontSize: '1.0em',
-//             outline: 'none',
-//             backgroundColor: 'gray',
-//             border: 'solid 1px rgba(255,255,255,1)',
-//             borderRadius: 6
-//         },
-//     },
-// };
 
 // RenderText receives a text props for use in rendering the
 // text of the novel in a nice format, seperating each section 
@@ -131,10 +58,10 @@ function RenderVoices(props) {
 
         return (
 
-            <Input type="select" name="select" id="select" style={{ width: "450px", fontSize: "30px" }} onChange={(e) => handleClick(e.target.value)}>
+            <Input type="select" name="select" id="select" style={{ width: "450px", fontSize: "calc(10px + 2vmin)" }} onChange={(e) => handleClick(e.target.value)}>
                 {voices_arr.map((voice, index) => {
                     return (
-                        <option value={voice}>{voice}</option>
+                        <option key={index} value={voice}>{voice}</option>
                     )
                 })}
             </Input>
@@ -213,14 +140,15 @@ class Main extends Component {
     render() {
 
         const handleSubmit = (text) => {
-            this.props.postText(text.url)
+            text.preventDefault();
+            this.props.postText(text.target[0].value)
         }
 
         var text_split = this.props.text.split('\n')
 
         var voices = window.speechSynthesis.getVoices()
 
-        console.log(this.state.voice)
+        //console.log(this.state.voice)
 
         return (
             <div className="App">
@@ -228,12 +156,13 @@ class Main extends Component {
                     <h1>LLibrary</h1>
                 </header>
                 <div className="container-fluid">
-                    <div className="col-12 col-md-9 Text_font">
-                        <LocalForm onSubmit={(text) => handleSubmit(text)}>
+                    <div className="col-12 col-md-9 col-xs-3 col-sm-6 Text_font">
+                        <Form onSubmit={(text) => handleSubmit(text)}>
                             <Row className="form-group">
                                 <Label htmlFor="text" className="column"> Url </Label>
                                 <Col>
-                                    <Control.text model=".url" id="url" name="url" placeholder="Enter Text" className="form-control" />
+                                    {/* <Control.text model=".url" id="url" name="url" placeholder="Enter Text" className="form-control" /> */}
+                                    <Input type="text" name="url" placeholder="Enter Url or plain text" />
                                 </Col>
                             </Row>
                             <Row className="form-group button">
@@ -241,20 +170,20 @@ class Main extends Component {
                                     <Button type="submit" color="primary"> Submit</Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                         <div className="sidenav">
                             <div className="slidecontainer">
                                 <p>Voices</p>
                                 <RenderVoices voices={voices} handleVoice={this.handleVoice} />
 
                                 <p>Playback Speed : {this.state.voice_speed}</p>
-                                <input type="range" min="0" max="1" value={this.state.voice_speed} step="0.01" class="slider" id="speed" onChange={(event) => this.handleSpeed(event.target.value)} />
+                                <input type="range" min="0" max="1" value={this.state.voice_speed} step="0.01" className="slider" id="speed" onChange={(event) => this.handleSpeed(event.target.value)} />
 
                                 <p>Volume : {this.state.volume}</p>
-                                <input type="range" min="0.1" max="9.99" value={this.state.volume} step="0.01" class="slider" id="volume" onChange={(event) => this.handleVolume(event.target.value)} />
+                                <input type="range" min="0.1" max="9.99" value={this.state.volume} step="0.01" className="slider" id="volume" onChange={(event) => this.handleVolume(event.target.value)} />
 
                                 <p>Pitch : {this.state.pitch}</p>
-                                <input type="range" min="0" max="2" value={this.state.pitch} step="0.01" class="slider" id="pitch" onChange={(event) => this.handlePitch(event.target.value)} />
+                                <input type="range" min="0" max="2" value={this.state.pitch} step="0.01" className="slider" id="pitch" onChange={(event) => this.handlePitch(event.target.value)} />
                                 <p></p>
                             </div>
                         </div>

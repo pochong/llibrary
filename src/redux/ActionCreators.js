@@ -2,7 +2,6 @@ import * as ActionTypes from './ActionTypes'
 
 export const postText = (text) => (dispatch) => {
     dispatch(textLoading(true));
-
     // setTimeout(() => {
     //     dispatch(addText("this is working"));
     // }, 2000)
