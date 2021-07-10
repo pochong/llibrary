@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Label, Button, Row, Col, Input, Form, FormGroup } from 'reactstrap'
 //import { Control, LocalForm } from 'react-redux-form'
 import TextToSpeech from '../Text_To_Speech/TextToSpeech'
+import TabComponent from './TabComponent'
 
 const mapStateToProps = state => {
     return {
@@ -155,44 +156,29 @@ class Main extends Component {
                 <header className="App-header">
                     <h1>LLibrary</h1>
                 </header>
-                <div className="container-fluid">
-                    <div className="col-12 col-md-9 col-xs-3 col-sm-6 Text_font">
-                        <Form onSubmit={(text) => handleSubmit(text)}>
-                            <Row className="form-group">
-                                <Label htmlFor="text" className="column"> Url </Label>
-                                <Col>
-                                    {/* <Control.text model=".url" id="url" name="url" placeholder="Enter Text" className="form-control" /> */}
-                                    <Input type="text" name="url" placeholder="Enter Url or plain text" />
-                                </Col>
-                            </Row>
-                            <Row className="form-group button">
-                                <Col>
-                                    <Button type="submit" color="primary"> Submit</Button>
-                                </Col>
-                            </Row>
-                        </Form>
-                        <div className="sidenav">
-                            <div className="slidecontainer">
-                                <p>Voices</p>
-                                <RenderVoices voices={voices} handleVoice={this.handleVoice} />
+                <div className=" Text_font">
+                    <TabComponent handleSubmit={handleSubmit} />
+                    <div className="sidenav">
+                        <div className="slidecontainer">
+                            <p>Voices</p>
+                            <RenderVoices voices={voices} handleVoice={this.handleVoice} />
 
-                                <p>Playback Speed : {this.state.voice_speed}</p>
-                                <input type="range" min="0" max="1" value={this.state.voice_speed} step="0.01" className="slider" id="speed" onChange={(event) => this.handleSpeed(event.target.value)} />
+                            <p>Playback Speed : {this.state.voice_speed}</p>
+                            <input type="range" min="0" max="1" value={this.state.voice_speed} step="0.01" className="slider" id="speed" onChange={(event) => this.handleSpeed(event.target.value)} />
 
-                                <p>Volume : {this.state.volume}</p>
-                                <input type="range" min="0.1" max="9.99" value={this.state.volume} step="0.01" className="slider" id="volume" onChange={(event) => this.handleVolume(event.target.value)} />
+                            <p>Volume : {this.state.volume}</p>
+                            <input type="range" min="0.1" max="9.99" value={this.state.volume} step="0.01" className="slider" id="volume" onChange={(event) => this.handleVolume(event.target.value)} />
 
-                                <p>Pitch : {this.state.pitch}</p>
-                                <input type="range" min="0" max="2" value={this.state.pitch} step="0.01" className="slider" id="pitch" onChange={(event) => this.handlePitch(event.target.value)} />
-                                <p></p>
-                            </div>
+                            <p>Pitch : {this.state.pitch}</p>
+                            <input type="range" min="0" max="2" value={this.state.pitch} step="0.01" className="slider" id="pitch" onChange={(event) => this.handlePitch(event.target.value)} />
+                            <p></p>
                         </div>
-                        <div>
-                            <TextToSpeech voice={this.state.voice} rate={this.state.voice_speed} pitch={this.state.pitch} volume={this.state.volume} split={text_split} index={this.state.index} handleIndex={this.handleIndex} changeColor={this.changeColor} />
-                        </div>
-                        <div className="text">
-                            <RenderText text={text_split} handleIndex={this.handleIndex} />
-                        </div>
+                    </div>
+                    <div>
+                        <TextToSpeech voice={this.state.voice} rate={this.state.voice_speed} pitch={this.state.pitch} volume={this.state.volume} split={text_split} index={this.state.index} handleIndex={this.handleIndex} changeColor={this.changeColor} />
+                    </div>
+                    <div>
+                        <RenderText text={text_split} handleIndex={this.handleIndex} />
                     </div>
                 </div>
             </div>

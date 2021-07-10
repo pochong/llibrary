@@ -135,7 +135,7 @@ class TextToSpeech extends Component {
         } else {
             this.props.changeColor(0, this.props.index)
             this.props.handleIndex(0);
-            //this.stop();
+            this.stop();
         }
     }
 

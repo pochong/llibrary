@@ -5,6 +5,7 @@
 .App-header {
   background-color: #282c34;
   min-height: 10vh;
+  min-width: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -22,6 +23,7 @@
   font-size: calc(10px + 2vmin);
   background-color: #282c34;
   min-height: 100vh;
+  min-width: 100vh;
   color: white;
   display: flex;
   flex-direction: column;
@@ -34,10 +36,6 @@
 
 .Text_font_text:hover {
   background-color: #708090;
-}
-
-.form-control {
-  width: 50vh;
 }
 
 .button {
@@ -90,14 +88,15 @@
   .sidenav:hover {left: 13%;}
 }
 
-.text {
-  margin-right: 130px;
-}
-
 .slidecontainer {
   width: 100%; /* Width of the outside container */
   color: #282c34;
   padding-left: 20px;
+}
+
+.butt {
+  align-self: center;
+  margin-left: 46.6%;
 }
 
 /* The slider itself */
